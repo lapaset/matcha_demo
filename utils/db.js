@@ -9,9 +9,6 @@ const pool = new Pool({
 	port: config.PG_PORT,
 })
 
-console.log('Pool', pool)
-
-
 module.exports = {
 	query: (text, params, callback) => {
 		const start = Date.now()

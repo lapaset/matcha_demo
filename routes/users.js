@@ -129,8 +129,10 @@ usersRouter.post('/', async (req, resp) => {
 		VALUES ($1, $2, $3, $4, $5, $6, $7)',
 	[firstName, lastName, username, email, hashedPassword, token, birthdate],
 	(err, res) => {
-		if (res)
+		if (res) {
+			sendEmail(email, token)
 			resp.status(201).send(res.rows[0])
+		}
 
 		else if (err.detail && err.detail.startsWith('Key (email)'))
 			resp.status(409).send({ error: 'email already exists' })
@@ -142,7 +144,6 @@ usersRouter.post('/', async (req, resp) => {
 			resp.status(500).send(err)
 	})
 
-	sendEmail(email, token)
 })
 
 usersRouter.patch('/:id', async (req, resp) => {

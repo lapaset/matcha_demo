@@ -12,7 +12,7 @@ const SelectTags = ({ state, setState }) => {
 	}
 
 	const handleInputChange = (inputValue) => {
-		setState({ inputValue, value })
+		setState({ inputValue, value: state.value || [] })
 	}
 
 	const createOption = label => ({ label, value: label })
@@ -32,10 +32,6 @@ const SelectTags = ({ state, setState }) => {
 				: '#' + inputValue
 
 			if (value.find(o => o.label === newTag) !== undefined) {
-				setState({
-					inputValue: '',
-					value
-				})
 				return
 			}
 			else if (options.find(o => o.label === newTag) !== undefined) {
@@ -81,8 +77,6 @@ const SelectTags = ({ state, setState }) => {
 			})
 	}, [])
 
-	const { value } = state
-
 	return <Form.Group>
 		<Form.Label htmlFor='tags-select'>tags</Form.Label>
 		<CreatableSelect
@@ -93,7 +87,7 @@ const SelectTags = ({ state, setState }) => {
 			onChange={handleChange}
 			onInputChange={handleInputChange}
 			onKeyDown={handleKeyDown}
-			value={value}
+			value={state.value}
 			options={options}
 			name='tags'
 		/>
