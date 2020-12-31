@@ -27,7 +27,6 @@ const Chat = ({ user, match, handleClose, wsClient }) => {
 
 	const handleSubmit = e => {
 		e.preventDefault()
-		console.log('handle submit')
 
 		if (!input)
 			return
@@ -66,7 +65,7 @@ const Chat = ({ user, match, handleClose, wsClient }) => {
 						<InputGroup >
 							<Form.Control
 								ref={inputField}
-								placeholder="write message and send"
+								placeholder={`write a message as ${user.username} and send`}
 								value={input}
 								onChange={e => setInput(e.target.value)}
 							/>

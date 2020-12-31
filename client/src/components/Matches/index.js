@@ -2,7 +2,7 @@ import React from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faReply } from '@fortawesome/free-solid-svg-icons'
+import { faReply, faUser } from '@fortawesome/free-solid-svg-icons'
 import Chat from './Chat'
 
 const LatestMsgPreview = ({ messages, user_id }) => {
@@ -20,7 +20,7 @@ const LatestMsgPreview = ({ messages, user_id }) => {
 		? ''
 		: <FontAwesomeIcon icon={faReply} color='grey' />
 	
-	return messages.length > 0 
+	return messages.length > 0 && i !== -1
 	? <span className='text-muted d-inline-block text-truncate' style={{ maxWidth: '100%' }}>
 		{replyIcon()} {latestReceived}
 	</span>
@@ -36,12 +36,14 @@ const Matches = ({ user, matches, chatToShow, setChatToShow, wsClient }) => {
 			<ListGroup className='text-left text-primary' variant='flush'>
 				{matches.map(m =>
 					<ListGroup.Item action key={m.username}
-						className='d-flex justify-content-between align-items-baseline'>
-						<div className='w-75 p-3 cursor-pointer' onClick={() => setChatToShow(m)}>
+						className='d-flex justify-content-between'>
+						<div className='w-75 cursor-pointer align-self-center' onClick={() => setChatToShow(m)}>
 							{m.username}<br/>
 							<LatestMsgPreview messages={m.messages} user_id={user.user_id} />
 						</div>
-						<Link to={`browse?user_id=${m.user_id}`}>profile</Link> 
+						<Link to={`browse?user_id=${m.user_id}`} className='p-3 align-self-center'>
+							<FontAwesomeIcon icon={faUser} />	
+						</Link> 
 					</ListGroup.Item>)
 				}
 			</ListGroup>
