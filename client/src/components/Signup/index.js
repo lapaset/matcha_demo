@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Form, Col, Button } from 'react-bootstrap'
-import '../../style/signup.css'
 import userService from '../../services/userService'
 import PasswordFields from '../UI/Forms/PasswordFields'
 import RequiredInputField from '../UI/Forms/RequiredInputField'
@@ -42,7 +41,7 @@ const Signup = () => {
 	}
 	return (
 		<>
-			<h2 className="text-center mt-3">Signup</h2>
+			<h2 className="text-center mt-3 mb-5">Signup</h2>
 
 			{notification
 				? <div className="text-center text-success" >{notification}</div>

@@ -13,7 +13,6 @@ import Navigation from './Navigation'
 import UserInfoForm from './UserInfoForm'
 import NotificationsList from '../Notifications/NotificationsList'
 import notificationService from '../../services/notificationService'
-import '../../style/userView.css'
 
 const UserView = ({ user, setUser, matches, setMatches, notifications, setNotifications,
 	chatToShow, setChatToShow, wsClient }) => {
