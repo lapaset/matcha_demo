@@ -13,13 +13,12 @@ import viewService from '../../../services/viewsService'
 import userService from '../../../services/userService'
 import socket from '../../../socket'
 
-const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches }) => {
+const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches, isMatch }) => {
 
 	const [liked, setLiked] = useState(false)
 	const [matchModal, setMatchModal] = useState(null)
 	const [confirmationModal, setConfirmationModal] = useState(null)
 	const [userToShow, setUserToShow] = useState(null)
-	const isMatch = matches ? matches.find(m => m.user_id = user_id) !== undefined : false
 	const [likeForView, setLikeForView] = useState(0)
 
 	useEffect(() => {

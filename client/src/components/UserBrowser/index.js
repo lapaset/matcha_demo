@@ -17,14 +17,22 @@ const UserBrowser = ({ user, wsClient, showUserAtLoad, matches, setMatches }) =>
 		fontWeight: 'bold'
 	}
 
+	const isMatch = user_id => matches && matches.length > 0
+		? matches.find(m => m.user_id === user_id) !== undefined
+		: false
+
 	const hideUser = () => {
-		history.push('/browse')
+		isMatch(showUser) ? history.push('/matches') : history.push('/browse')
 		setShowUser(null)
+	}
+
+	const userCardProps = {
+		user_id: showUser, loggedUser: user, wsClient, hideUser, matches, setMatches, isMatch
 	}
 
 	return showUser
 
-		? <UserCard user_id={showUser} loggedUser={user} wsClient={wsClient} hideUser={hideUser} matches={matches} setMatches={setMatches} />
+		? <UserCard {...userCardProps} />
 
 		: <>
 			<ButtonGroup className="mb-5">
