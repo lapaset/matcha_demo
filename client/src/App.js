@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import './style/app.css'
 import userService from './services/userService'
 import notificationService from './services/notificationService'
 import likeService from './services/likeService'

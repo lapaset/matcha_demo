@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 #main-container {
 	height: 100vh;
 	padding: 5rem 0 3em;
@@ -36,10 +40,6 @@ footer {
 	background: white;
 }
 
-#toggleFilterForm {
-	cursor: pointer;
-}
-
 .notifications {
 	display: inline-block;
 }
@@ -59,6 +59,12 @@ footer {
 
 input[type="file"] {
     display: none;
+}
+
+.tag {
+	margin: 0 0.5rem 0 0;
+	padding: 0.2rem;
+	font-size: 0.8rem;
 }
 
 @media only screen and (max-width: 500px) {
