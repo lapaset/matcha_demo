@@ -7,6 +7,7 @@ import chatService from './services/chatService'
 import socket from './socket'
 import auth from './utils/auth'
 import UserView from './components/UserView'
+import './style/app.css'
 
 const App = () => {
 
