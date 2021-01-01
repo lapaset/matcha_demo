@@ -10,7 +10,7 @@ const UserViews = ({ users, showUser }) => {
 
 		visitService.visitHistory(true)
 			.then(res => {
-				setResultsToShow(users.filter(u => res.some(l => l.user_id === u.user_id)))
+				setResultsToShow(users.filter(u => res.some(v => v.from_user_id === u.user_id)))
 			})
 			.catch(e => {
 				console.log('Database error', e)

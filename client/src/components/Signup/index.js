@@ -48,8 +48,6 @@ const Signup = () => {
 
 				: <Form onSubmit={handleSubmit(onSubmit)}>
 
-					{errorMessage && <div className="text-center text-danger" >{errorMessage}</div>}
-
 					<Form.Row>
 						<Col>
 							<RequiredInputField label='first name' errors={errors.firstName}
@@ -80,6 +78,8 @@ const Signup = () => {
 
 					<PasswordFields watch={watch} register={register} errors={errors}
 						required={true} />
+
+					{errorMessage && <div className="text-center text-danger" >{errorMessage}</div>}
 
 					<Button className="btn-success mt-3" type="submit">Register</Button>
 				</Form>
