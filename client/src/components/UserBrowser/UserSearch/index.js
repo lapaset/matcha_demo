@@ -7,22 +7,21 @@ import FilterForm from './FilterForm'
 const UserSearch = ({ user, showUser, users }) => {
 
 	const [resultsToShow, setResultsToShow] = useState([])
+	const [requiredTags, setRequiredTags] = useState(localStorage.getItem('matchaRequiredTags') || [])
 
 	const maxDistance = useFilter('matchaMaxDistance', 100, 'number')
 	const minAge = useFilter('matchaMinAge', 20, 'number')
 	const maxAge = useFilter('matchaMaxAge', 120, 'number')
 	const minFame = useFilter('matchaMinFame', 50, 'number')
-	const requiredTag = useFilter('matchaRequiredTag', '', 'text')
-
 
 	useEffect(() => {
-		console.log('set results at user search')
 		setResultsToShow(users)
 	}, [users])
 
+	const handleTagsChange = e => setRequiredTags(e ? e.map(t => t.value) : [])
 
-	const requiredTagFound = tags => tags && requiredTag.value
-		? tags.split('#').includes(requiredTag.value)
+	const requiredTagFound = tags => tags && requiredTags.length > 0
+		? requiredTags.every(t => tags.split('#').includes(t))
 		: true
 
 	const matchesFilters = r =>
@@ -40,7 +39,7 @@ const UserSearch = ({ user, showUser, users }) => {
 
 
 	const sortFormProps = ({ user, resultsToShow, setResultsToShow })
-	const filterFormProps = ({ user, requiredTag, maxDistance, minFame, minAge, maxAge })
+	const filterFormProps = ({ user, requiredTags, handleTagsChange, maxDistance, minFame, minAge, maxAge })
 
 	return <>
 		<SortForm {...sortFormProps} />
