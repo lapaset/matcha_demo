@@ -23,14 +23,9 @@ const ActionButton = ({ action, icon, text, setConfirmationModal, username }) =>
 	</Button>
 
 
-const ActionButtons = ({ liked, hasPhoto, likeHandler, reportHandler, blockHandler, setConfirmationModal, username }) => {
+const ActionButtons = ({ liked, hasPhoto, likeHandler, reportHandler, blockHandler, ...actionButtonProps }) => (
 
-	const actionButtonProps = {
-		setConfirmationModal,
-		username
-	}
-
-	return <Card.Body>
+	<Card.Body>
 		{
 			hasPhoto || liked
 				? <LikeButton action={likeHandler} icon={faHeart} text={ liked ? ' Unlike' : ' Like' } />
@@ -39,6 +34,7 @@ const ActionButtons = ({ liked, hasPhoto, likeHandler, reportHandler, blockHandl
 		<ActionButton action={reportHandler} icon={faFlag} text=" Report" { ...actionButtonProps } />
 		<ActionButton action={blockHandler} icon={faBan} text=" Block" { ...actionButtonProps } />
 	</Card.Body>
-}
+
+)
 
 export default ActionButtons
