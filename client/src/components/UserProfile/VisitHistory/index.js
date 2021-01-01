@@ -9,11 +9,10 @@ const VisitHistory = ({ user }) => {
 	const [visitHistory, setVisitHistory] = useState([])
 
 	useEffect(() => {
-				
+
 		visitService
 			.visitHistory(false)
 			.then(res => {
-				console.log('res', res)
 				setVisitHistory(res)
 			})
 			.catch(e => {
@@ -25,11 +24,9 @@ const VisitHistory = ({ user }) => {
 
 	return visitHistory && visitHistory.length > 0
 		? <ListGroup className='text-left'>
-			{visitHistory.map(u => {
-				console.log('u', u)
-				return <ListGroup.Item action key={u.username}>
-						<Link to={`browse/?user_id=${u.to_user_id}`}>{u.username}</Link> <TimeAgo date={u.date} live={false} />
-				</ListGroup.Item>}
+			{visitHistory.map(u => <ListGroup.Item action key={u.username}>
+				<Link to={`browse/?user_id=${u.to_user_id}`}>{u.username}</Link> <TimeAgo date={u.date} live={false} />
+			</ListGroup.Item>
 			)}
 		</ListGroup>
 		: <div className="text-info">Your visit history is empty</div>
