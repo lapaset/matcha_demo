@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/views'
+const baseUrl = '/api/views'
 const viewsListUrl = '/api/views/list'
 
 

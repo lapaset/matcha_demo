@@ -26,21 +26,20 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 			.getBlockedId(user_id)
 			.then(res => {
 				if (res.length > 0)
-					window.location.href = 'http://localhost:3000/browse'
+					hideUser()
+				else {
+					userService
+					.getUser(user_id)
+					.then(res => {
+						setUserToShow(res)
+					})
+					.catch(() => {
+						hideUser()
+					})
+				}
 			})
 			.catch(e => {
 				console.log('Database error', e)
-			})
-	}, [user_id])
-
-	useEffect(() => {
-		userService
-			.getUser(user_id)
-			.then(res => {
-				setUserToShow(res)
-			})
-			.catch(() => {
-				window.location.href = 'http://localhost:3000/browse'
 			})
 	}, [user_id])
 
@@ -57,8 +56,7 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 			viewService
 				.views({
 					from_user_id: loggedUser.user_id,
-					to_user_id: userToShow.user_id,
-					status: likeForView
+					to_user_id: userToShow.user_id
 				})
 				.then(res => {
 					console.log(res.message)
@@ -68,7 +66,7 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 				})
 		}
 
-	}, [userToShow, loggedUser, wsClient, likeForView])
+	}, [userToShow, loggedUser, wsClient])
 
 	useEffect(() => {
 		if (userToShow)

@@ -9,6 +9,6 @@ module.exports = {
 	likes: require('./likes'),
 	report: require('./report'),
 	block: require('./block'),
-	views: require('./views'),
+	visits: require('./visits'),
 	notifications: require('./notifications')
 }

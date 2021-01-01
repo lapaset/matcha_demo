@@ -27,7 +27,8 @@ const UserBrowser = ({ user, wsClient, showUserAtLoad, matches, setMatches }) =>
 	}
 
 	const userCardProps = {
-		user_id: showUser, loggedUser: user, wsClient, hideUser, matches, setMatches, isMatch
+		user_id: showUser, loggedUser: user, wsClient, hideUser,
+		matches, setMatches, isMatch
 	}
 
 	return showUser
