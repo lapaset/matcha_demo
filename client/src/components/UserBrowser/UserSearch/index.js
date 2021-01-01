@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFilter } from '../../../hooks/index'
-import ListOfUsers from './ListOfUsers'
+import ListOfUsers from '../ListOfUsers'
 import SortForm from './SortForm'
 import FilterForm from './FilterForm'
 
-const UserSearch = ({ user, setShowUser }) => {
+const UserSearch = ({ user, showUser, users }) => {
 
 	const [resultsToShow, setResultsToShow] = useState([])
 
@@ -14,8 +14,11 @@ const UserSearch = ({ user, setShowUser }) => {
 	const minFame = useFilter('matchaMinFame', 50, 'number')
 	const requiredTag = useFilter('matchaRequiredTag', '', 'text')
 
-	const sortFormProps = ({ user, resultsToShow, setResultsToShow })
-	const filterFormProps = ({ user, requiredTag, maxDistance, minFame, minAge, maxAge })
+
+	useEffect(() => {
+		setResultsToShow(users)
+	}, [users])
+
 
 	const requiredTagFound = tags => tags && requiredTag.value
 		? tags.split('#').includes(requiredTag.value)
@@ -34,15 +37,16 @@ const UserSearch = ({ user, setShowUser }) => {
 			.filter(r => matchesFilters(r))
 		: []
 
-	const handleClick = user => setShowUser(user.user_id)
 
+	const sortFormProps = ({ user, resultsToShow, setResultsToShow })
+	const filterFormProps = ({ user, requiredTag, maxDistance, minFame, minAge, maxAge })
 
 	return <>
 		<SortForm {...sortFormProps} />
 
 		<FilterForm {...filterFormProps} />
 
-		<ListOfUsers users={filterResults()} handleClick={handleClick} />
+		<ListOfUsers users={filterResults()} handleClick={showUser} />
 	</>
 
 }

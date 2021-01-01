@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAward } from '@fortawesome/free-solid-svg-icons'
 import { ListGroup } from 'react-bootstrap'
-import dbFunctions from '../../../utils/dbFunctions'
+import dbFunctions from '../../utils/dbFunctions'
 
 const Tags = ({ tags }) => 
 	<div className='text-muted d-inline-block text-truncate w-100'>

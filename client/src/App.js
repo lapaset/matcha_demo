@@ -85,7 +85,6 @@ const App = () => {
 						.catch(e => {
 							console.log('Database error', e)
 						})
-
 					setMatches()
 				})
 				.catch(e => {
