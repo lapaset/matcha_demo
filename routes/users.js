@@ -78,7 +78,7 @@ usersRouter.get('/:id', (req, resp) => {
 		if (res && res.rows[0])
 			resp.status(200).send(res.rows)
 		else if (res)
-			resp.status(500).send({ error: 'User not found' })
+			resp.status(404).send({ error: 'User not found' })
 		else
 			resp.status(500).send({ error: err.detail })
 	})

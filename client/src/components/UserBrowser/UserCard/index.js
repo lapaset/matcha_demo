@@ -41,7 +41,7 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 			.catch(e => {
 				console.log('Database error', e)
 			})
-	}, [user_id])
+	}, [user_id, hideUser])
 
 	//send notification and save visit
 	useEffect(() => {

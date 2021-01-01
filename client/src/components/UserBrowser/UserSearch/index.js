@@ -16,6 +16,7 @@ const UserSearch = ({ user, showUser, users }) => {
 
 
 	useEffect(() => {
+		console.log('set results at user search')
 		setResultsToShow(users)
 	}, [users])
 

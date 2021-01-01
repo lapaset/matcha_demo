@@ -12,7 +12,7 @@ import './style/app.css'
 const App = () => {
 
 	const [user, setUser] = useState({})
-	const [matches, setMatches] = useState([])
+	const [matches, setMatches] = useState(null)
 	const [notifications, setNotifications] = useState(null)
 	const [chatToShow, setChatToShow] = useState(null)
 
@@ -73,19 +73,17 @@ const App = () => {
 					chatService
 						.getChatHistory()
 						.then(res => {
-
 							res.forEach(m => {
 								const match = matchesFromDb.find(u => u.user_id === m.sender || u.user_id === m.receiver)
 								if (match)
 									match.messages.push(m)
 							})
-
 							setMatches(matchesFromDb)
 						})
 						.catch(e => {
 							console.log('Database error', e)
 						})
-					setMatches()
+
 				})
 				.catch(e => {
 					console.log('Database error', e)
