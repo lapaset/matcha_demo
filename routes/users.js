@@ -84,15 +84,6 @@ usersRouter.get('/:id', (req, resp) => {
 	})
 })
 
-/*
-SELECT user_id, first_name, last_name, username, email, verified,
-token, password, gender, orientation, bio, tags, AGE(birthdate) as age,
-id, profile_pic, photo_str, longitude, latitude, fame
-	FROM users \
-	LEFT OUTER JOIN photos USING (user_id) \
-	WHERE users.user_id = $1
-
-*/
 usersRouter.post('/', async (req, resp) => {
 
 	const sendEmail = (email, token) => {
@@ -104,7 +95,6 @@ usersRouter.post('/', async (req, resp) => {
 			}
 		})
 
-		//could add user_id to the verify address
 		const mailOptions = {
 			from: 'testing.matcha@gmail.com',
 			to: email,
