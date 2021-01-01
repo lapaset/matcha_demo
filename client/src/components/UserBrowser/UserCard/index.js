@@ -9,7 +9,7 @@ import ConfirmationModal from './ConfirmationModal'
 import likeService from '../../../services/likeService'
 import reportService from '../../../services/reportService'
 import blockService from '../../../services/blockService'
-import viewService from '../../../services/viewsService'
+import visitService from '../../../services/visitService'
 import userService from '../../../services/userService'
 import socket from '../../../socket'
 
@@ -53,14 +53,8 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 				notification: `${loggedUser.username} viewed your profile`
 			})
 
-			viewService
-				.views({
-					from_user_id: loggedUser.user_id,
-					to_user_id: userToShow.user_id
-				})
-				.then(res => {
-					console.log(res.message)
-				})
+			visitService
+				.addVisit({ to_user_id: userToShow.user_id })
 				.catch(e => {
 					console.log('Database error', e)
 				})
