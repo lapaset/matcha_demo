@@ -7,6 +7,11 @@ const getLikes = async () => {
 	return resp.data
 }
 
+const getLikesToUser = async () => {
+	const resp = await axios.get(`${baseUrl}?to=true`, auth.config())
+	return resp.data
+}
+
 const getLike = async to_user_id => {
 	const resp = await axios.get(`${baseUrl}?to_user_id=${to_user_id}`, auth.config())
 	return resp.data
@@ -22,4 +27,4 @@ const toggleLike = async user_id => {
 	return resp.data
 }
 
-export default { getLikes, getLike, getMatches, toggleLike }
+export default { getLikes, getLikesToUser, getLike, getMatches, toggleLike }

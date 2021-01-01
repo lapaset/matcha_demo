@@ -10,25 +10,32 @@ likesRouter.get('/', (req, resp) => {
 	if (!user)
 		return resp.status(401).json({ error: 'token missing or invalid' })
 
-	let query = 'SELECT user_id, username, like_id, match FROM likes\
-		INNER JOIN users ON to_user_id = user_id WHERE from_user_id = $1'
+	let query = 'SELECT user_id, username, like_id, match FROM likes'
+
 	const parameters = [user.user_id]
 
-	if (req.query.to_user_id) {
-		parameters.push(req.query.to_user_id)
-		query = query.concat(` AND to_user_id = $${parameters.length}`)
-	}
+	if (req.query.to === 'true')
+		query = query.concat (' INNER JOIN users ON from_user_id = user_id WHERE to_user_id = $1')
 
-	if (req.query.match) {
-		parameters.push(req.query.match)
-		query = query.concat(` AND match = $${parameters.length}`)
+	else {
+		query = query.concat(' INNER JOIN users ON to_user_id = user_id WHERE from_user_id = $1')
+
+		if (req.query.to_user_id) {
+			parameters.push(req.query.to_user_id)
+			query = query.concat(` AND to_user_id = $${parameters.length}`)
+		}
+	
+		if (req.query.match) {
+			parameters.push(req.query.match)
+			query = query.concat(` AND match = $${parameters.length}`)
+		}
 	}
 
 	db.query(query, parameters, (err, res) => {
 		if (res)
 			resp.status(200).send(res.rows)
 		else
-			resp.status(500).send({ error: err.detail })
+			resp.status(500).send(err)
 	})
 
 })
