@@ -1,6 +1,8 @@
 import React from 'react'
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 const UserInformation = ({ user, isMatch }) => <>
 
@@ -39,7 +41,7 @@ const UserInformation = ({ user, isMatch }) => <>
 		<ListGroupItem>
 			{
 				user.online
-					? 'online'
+					? <><FontAwesomeIcon icon={faCircle} color='green' size='xs' /> online</>
 					: <>last online <TimeAgo date={user.last_online} live={false} /></>
 			}
 

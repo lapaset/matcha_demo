@@ -19,8 +19,8 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 	const [matchModal, setMatchModal] = useState(null)
 	const [confirmationModal, setConfirmationModal] = useState(null)
 	const [userToShow, setUserToShow] = useState(null)
-	const [likeForView, setLikeForView] = useState(0)
 
+	//get user if not blocked
 	useEffect(() => {
 		blockService
 			.getBlockedId(user_id)
@@ -43,8 +43,8 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 			})
 	}, [user_id])
 
+	//send notification and save visit
 	useEffect(() => {
-
 		if (userToShow && userToShow.user_id !== loggedUser.user_id) {
 
 			socket.sendNotification(wsClient, {
@@ -62,6 +62,7 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 
 	}, [userToShow, loggedUser, wsClient])
 
+	//get like
 	useEffect(() => {
 		if (userToShow)
 			likeService
@@ -93,7 +94,6 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 				if (res.value === 1 && res.status === 'match') {
 					sendNotification(`New match with ${loggedUser.username}`)
 					setMatchModal(userToShow.username)
-					setLikeForView(1)
 					setMatches(matches.concat({
 						user_id: userToShow.user_id,
 						username: userToShow.username,
@@ -102,11 +102,8 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 					}))
 				}
 
-				else if (res.value === 1 && res.status === 'like') {
-					setLikeForView(1)
+				else if (res.value === 1 && res.status === 'like')
 					sendNotification(`${loggedUser.username} likes you`)
-				}
-
 
 				else if (res.value === 0 && res.status === 'unmatch') {
 					sendNotification(`No longer match with ${loggedUser.username}`)
