@@ -41,7 +41,7 @@ const Signup = () => {
 	}
 	return (
 		<>
-			<h2 className="text-center mt-3 mb-5">Signup</h2>
+			<h1 className="text-center mt-3 mb-5">Signup</h1>
 
 			{notification
 				? <div className="text-center text-success" >{notification}</div>

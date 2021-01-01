@@ -21,7 +21,7 @@ const ForgotPassword = () => {
 			})
 	}
 	return <>
-		<h2 className="mt-3">Forgot password</h2>
+		<h1 className="mt-3">Forgot password</h1>
 		<div className="align-items-center">
 			<form onSubmit={forgotHandler}>
 				{errMessage && <div className="text-danger" ><strong>{errMessage}</strong></div>}

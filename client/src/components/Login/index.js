@@ -48,7 +48,7 @@ const Login = ({ setUser, wsClient }) => {
 
 	return (
 		<>
-			<h2 className="text-center mt-3">Login</h2>
+			<h1 className="text-center mt-3">Login</h1>
 
 			<form onSubmit={handleLogin}>
 				{errorMessage && <div className="text-danger" >{errorMessage}</div>}

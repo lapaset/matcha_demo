@@ -3,27 +3,10 @@ import { Button, ButtonGroup } from 'react-bootstrap'
 import { Switch, Route, useRouteMatch, NavLink, useHistory } from 'react-router-dom'
 import UserCard from './UserCard'
 import UserSearch from './UserSearch'
+import UserLikes from './UserLikes'
+import UserViews from './UserViews'
 import userService from '../../services/userService'
-import likeService from '../../services/likeService'
-import ListOfUsers from './ListOfUsers'
 
-const UserLikes = ({ users, showUser }) => {
-
-	const [resultsToShow, setResultsToShow] = useState([])
-
-	useEffect(() => {
-		likeService.getLikesToUser()
-			.then(res => {
-				setResultsToShow(users.filter(u => res.some(l => l.user_id === u.user_id)))
-			})
-	}, [users, setResultsToShow])
-
-	return <>
-	<h2>Users that like you</h2>
-	<ListOfUsers users={resultsToShow} handleClick={showUser} />
-	</>
-
-}
 
 const UserBrowser = ({ user, wsClient, showUserAtLoad, matches, setMatches }) => {
 	const [users, setUsers] = useState([])
@@ -95,15 +78,12 @@ const UserBrowser = ({ user, wsClient, showUserAtLoad, matches, setMatches }) =>
 		matches, setMatches, isMatch
 	}
 
-	const userSearchProps = {
-		user, showUser, users
-	}
+	const userSearchProps = { user, showUser, users }
 
-	const userLikesProps = {
-		showUser, users
-	}
+	const userLikesProps = { showUser, users }
 
-	console.log('users', users, 'matches', matches)
+	const userViewsProps = { showUser, users }
+
 	return matches
 
 		? userToShow
@@ -126,7 +106,7 @@ const UserBrowser = ({ user, wsClient, showUserAtLoad, matches, setMatches }) =>
 						<UserLikes {...userLikesProps} />
 					</Route>
 					<Route path={`${path}/views`}>
-						<div>Show users that viewed you</div>
+						<UserViews {...userViewsProps} />
 					</Route>
 				</Switch>
 			</>

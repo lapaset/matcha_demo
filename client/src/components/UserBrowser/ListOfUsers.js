@@ -37,8 +37,7 @@ const ListOfUsers = ({ users, handleClick }) => {
 				)}
 			</ListGroup>
 			: <div className="text-info mt-3">
-				Could not find any matching users<br />
-				please try different filters
+				Could not find any matching users
 			</div>
 	)
 }

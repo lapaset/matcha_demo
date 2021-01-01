@@ -48,7 +48,7 @@ const ResetPassword = () => {
 	}
 
 	return <>
-		<h2 className="text-center mt-3">Reset your password</h2>
+		<h1 className="text-center mt-3">Reset your password</h1>
 		<div className="row justify-content-center align-items-center">
 			<form className="text-center mt-3 col-md-6 col-sm-6 col-lg-4 col-xs-8" onSubmit={resetForm}>
 				{status && <div className="text-success" ><strong>{status}</strong></div>}
