@@ -11,10 +11,10 @@ router.get('/', (req, resp) => {
 
 	let query = 'SELECT date, from_user_id, to_user_id, username\
 	FROM visits, users '
-	
-	query = req.query.to
-		? query.concat('WHERE to_user_id = $1 AND to_user_id = user_id')
-		: query.concat('WHERE from_user_id = $1 AND from_user_id = user_id')
+
+	query = req.query.to === 'true'
+		? query.concat('WHERE to_user_id = $1 AND from_user_id = user_id ORDER BY date DESC')
+		: query.concat('WHERE from_user_id = $1 AND to_user_id = user_id ORDER BY date DESC')
 	
 	db.query(query, [user.user_id], (err, res) => {
 		if (res)
