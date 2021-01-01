@@ -62,9 +62,10 @@ const App = () => {
 			likeService
 				.getMatches(user.user_id)
 				.then(res => {
-					if (res.length < 1)
+					if (res.length < 1) {
+						setMatches([])
 						return
-
+					}
 					const matchesFromDb = res.map(m => ({
 						...m,
 						messages: []
