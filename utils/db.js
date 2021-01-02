@@ -1,13 +1,19 @@
 const config = require('./config')
 const Pool = require('pg').Pool
+const isProduction = process.env.NODE_ENV === 'production'
 
-const pool = new Pool({
-	user: config.PG_USER,
-	host: config.PG_HOST,
-	database: config.PG_DB,
-	password: config.PG_PW,
-	port: config.PG_PORT,
-})
+const pool = isProduction
+	? new Pool({
+		connectionString: process.env.DATABASE_URL,
+		ssl: isProduction
+	})
+	: new Pool({
+		user: config.PG_USER,
+		host: config.PG_HOST,
+		database: config.PG_DB,
+		password: config.PG_PW,
+		port: config.PG_PORT,
+	})
 
 module.exports = {
 	query: (text, params, callback) => {
