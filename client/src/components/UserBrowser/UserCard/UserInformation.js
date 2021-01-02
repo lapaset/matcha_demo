@@ -12,7 +12,7 @@ const UserInformation = ({ user, isMatch }) => <>
 		{isMatch(user.user_id) && <Card.Text><span className="p-1 border border-info rounded text-info">Match</span></Card.Text>}
 
 		{
-			user.bio
+			user.bio && user.bio
 				.split('\n')
 				.map(p =>
 					<Card.Text key={p}>{p}</Card.Text>
