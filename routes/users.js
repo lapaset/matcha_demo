@@ -1,7 +1,7 @@
 const usersRouter = require('express').Router()
 const db = require('../utils/db')
 const bcrypt = require('bcryptjs')
-const nodemailer = require('nodemailer')
+const email = require('../utils/email')
 const jwt = require('jsonwebtoken')
 const tokenSecret = require('../utils/config').TOKEN_SECRET
 
@@ -76,7 +76,6 @@ usersRouter.get('/:id', (req, resp) => {
 	LEFT OUTER JOIN photos USING (user_id) \
 	WHERE users.user_id = $1')
 
-
 	db.query(query, [req.params.id], (err, res) => {
 		if (res && res.rows[0])
 			resp.status(200).send(res.rows)
@@ -89,31 +88,6 @@ usersRouter.get('/:id', (req, resp) => {
 
 usersRouter.post('/', async (req, resp) => {
 
-	const sendEmail = (email, token) => {
-		const transporter = nodemailer.createTransport({
-			service: 'gmail',
-			auth: {
-				user: 'testing.matcha',
-				pass: 'matcha1234'
-			}
-		})
-
-		const mailOptions = {
-			from: 'testing.matcha@gmail.com',
-			to: email,
-			subject: 'Verify your matcha account',
-			text: `Hello! Please click the following link to verify your email /verify?token=${token}`
-		}
-
-		transporter.sendMail(mailOptions, function (error, info) {
-			if (error) {
-				console.log(error)
-			} else {
-				console.log('Email sent: ' + info.response)
-			}
-		})
-	}
-
 	const { firstName, lastName, username, email, token, birthdate } = req.body
 
 	const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -123,7 +97,8 @@ usersRouter.post('/', async (req, resp) => {
 		[firstName, lastName, username, email, hashedPassword, token, birthdate],
 		(err, res) => {
 			if (res) {
-				sendEmail(email, token)
+				email.sendEmail(email, 'Verify your matcha account', `Please click the following link to verify your email
+				/verify?token=${token}`)
 				resp.status(201).send(res.rows[0])
 			}
 

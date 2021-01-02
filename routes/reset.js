@@ -1,7 +1,7 @@
 const resetRouter = require('express').Router()
 const db = require('../utils/db')
 const crypto = require('crypto')
-const util = require('../utils/resetEmail')
+const email = require('../utils/email')
 const bcrypt = require('bcryptjs')
 
 resetRouter.post('/', (req, resp) => {
@@ -13,9 +13,10 @@ resetRouter.post('/', (req, resp) => {
 					console.log(err)
 				const token = buffer.toString('hex')
 				db.query('UPDATE users SET token = $1 WHERE email = $2', [token, req.body.email], (err, res) => {
-					if (res)
-					{
-						util.resetEmail(req.body.email, token)
+					if (res) {
+						email.sendEmail(req.body.email, 'Reset matcha password',
+							`Please click the following link to reset your password
+/reset-password/${token}`)
 						resp.status(200).send({ message: 'Check your email' })
 					}
 					else
