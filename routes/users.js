@@ -1,7 +1,7 @@
 const usersRouter = require('express').Router()
 const db = require('../utils/db')
 const bcrypt = require('bcryptjs')
-const email = require('../utils/email')
+const mail = require('../utils/email')
 const jwt = require('jsonwebtoken')
 const tokenSecret = require('../utils/config').TOKEN_SECRET
 
@@ -97,7 +97,7 @@ usersRouter.post('/', async (req, resp) => {
 		[firstName, lastName, username, email, hashedPassword, token, birthdate],
 		(err, res) => {
 			if (res) {
-				email.sendEmail(email, 'Verify your matcha account', `Please click the following link to verify your email
+				mail.sendEmail(email, 'Verify your matcha account', `Please click the following link to verify your email
 				/verify?token=${token}`)
 				resp.status(201).send(res.rows[0])
 			}
