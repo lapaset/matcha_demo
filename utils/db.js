@@ -18,6 +18,8 @@ module.exports = {
 		client.connect()
 
 		return client.query(text, params, (err, res) => {
+
+			console.log('is this what crashes? text', text, 'callback', callback)
 			if (res)
 				console.log('postgres query', { text, rows: res.rowCount })
 			callback(err, res)
