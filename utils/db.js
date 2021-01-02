@@ -1,28 +1,27 @@
 const config = require('./config')
-const Pool = require('pg').Pool
+const { Client } = require('pg')
 const isProduction = process.env.NODE_ENV === 'production'
-
-const pool = isProduction
-	? new Pool({
-		connectionString: process.env.DATABASE_URL,
-		ssl: isProduction
-	})
-	: new Pool({
-		user: config.PG_USER,
-		host: config.PG_HOST,
-		database: config.PG_DB,
-		password: config.PG_PW,
-		port: config.PG_PORT,
-	})
+const connectionString = isProduction
+	? process.env.DATABASE_URL
+	: `postgresql://${config.PG_USER}:${config.PG_PW}@${config.PG_HOST}:${config.PG_PORT}/${config.PG_DB}`
 
 module.exports = {
 	query: (text, params, callback) => {
-		const start = Date.now()
-		return pool.query(text, params, (err, res) => {
-			const duration = Date.now() - start
+
+		const client = new Client({
+			connectionString,
+			ssl: isProduction 
+				? { rejectUnauthorized: false }
+				: false
+		})
+
+		client.connect()
+
+		return client.query(text, params, (err, res) => {
 			if (res)
-				console.log('postgres query', { text, duration, rows: res.rowCount })
+				console.log('postgres query', { text, rows: res.rowCount })
 			callback(err, res)
+			client.end()
 		})
 	},
 }
