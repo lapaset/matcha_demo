@@ -12,6 +12,7 @@ app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 app.enable('trust proxy')
 
+app.use(express.static(path.resolve(__dirname, '../client/build')))
 Object.keys(routes).forEach(k => {
 	app.use(`/api/${k}`, routes[k])
 })
