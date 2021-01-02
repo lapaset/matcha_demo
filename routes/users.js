@@ -15,7 +15,7 @@ usersRouter.get('/', (req, resp) => {
 	let query = 'SELECT username, user_id, AGE(birthdate) as age, tags,\
 	gender, orientation, fame, longitude, latitude,\
 	earth_distance(ll_to_earth($1, $2),\
-	ll_to_earth(longitude, latitude)) as distance FROM users\
+	ll_to_earth(longitude, latitude)) / 1000 as distance FROM users\
 	WHERE NOT EXISTS (SELECT 1 FROM blocked\
 	WHERE (from_user_id = $3 AND to_user_id = users.user_id) OR\
 	(from_user_id = users.user_id AND to_user_id = $3))\
