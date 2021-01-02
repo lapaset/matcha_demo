@@ -18,10 +18,10 @@ const LatestMsgPreview = ({ messages, user_id }) => {
 
 	const replyIcon = () => i === messages.length - 1
 		? ''
-		: <FontAwesomeIcon icon={faReply} color='grey' />
+		: <FontAwesomeIcon icon={faReply} color='grey' className='mr-1' />
 	
 	return messages.length > 0 && i !== -1
-	? <span className='text-muted d-inline-block text-truncate' style={{ maxWidth: '100%' }}>
+	? <span className='msg-preview d-inline-block text-truncate text-muted'>
 		{replyIcon()} {latestReceived}
 	</span>
 	: ''
@@ -41,7 +41,7 @@ const Matches = ({ user, matches, chatToShow, setChatToShow, wsClient }) => {
 							{m.username}<br/>
 							<LatestMsgPreview messages={m.messages} user_id={user.user_id} />
 						</div>
-						<Link to={`browse?user_id=${m.user_id}`} className='p-3 align-self-center'>
+						<Link to={`browse?user_id=${m.user_id}`} className='p-3 align-self-center chat-profile-link'>
 							<FontAwesomeIcon icon={faUser} />	
 						</Link> 
 					</ListGroup.Item>)
