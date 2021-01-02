@@ -2,7 +2,7 @@ const db = require('../utils/db')
 const tagsRouter = require('express').Router()
 
 tagsRouter.get('/', (req, resp) => {
-	db.query('SELECT * FROM tags', (err, res) => {
+	db.query('SELECT * FROM tags', [], (err, res) => {
 		if (res)
 			resp.status(200).send(res.rows)
 		else
