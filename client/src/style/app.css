@@ -40,12 +40,12 @@ footer {
 	background: white;
 }
 
-.notifications {
-	font-size: 0.7em;
+.notifications-icon {
+	font-size: 0.9em;
 	display: inline-block;
 }
 
-.unreadNotifications {
+.unread-notifications-icon {
 	font-size: 0.55em;
 	margin-left: -0.6em;
 	margin-bottom: 0.9em;

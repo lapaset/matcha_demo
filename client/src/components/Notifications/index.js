@@ -16,9 +16,9 @@ const Notifications = ({ notifications, handleNotificationClick, markAllNotifica
 		: false
 
 	const dropDownButton = () => <>
-		<FontAwesomeIcon icon={faBell} />
+		<FontAwesomeIcon icon={faBell} className='notifications-icon' />
 		{ unreadNotifications()
-			? <FontAwesomeIcon icon={faCircle} color='gold' className='unreadNotifications' />
+			? <FontAwesomeIcon icon={faCircle} color='gold' className='unread-notifications-icon' />
 			: null
 		}
 	</>
