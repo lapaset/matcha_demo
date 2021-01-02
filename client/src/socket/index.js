@@ -1,7 +1,8 @@
 import { w3cwebsocket as W3CWebSocket } from 'websocket'
 
 const createWs = from => {
-	const client = new W3CWebSocket('ws://127.0.0.1:3001')
+
+	const client = new W3CWebSocket('wss://matchademo.herokuapp.com')
 
 	client.onerror = () => {
 		console.log('Websocket connection error')
