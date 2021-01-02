@@ -12,18 +12,20 @@ usersRouter.get('/', (req, resp) => {
 	if (!user)
 		return resp.status(401).json({ error: 'token missing or invalid' })
 
-	let query = 'SELECT username, user_id, longitude, latitude,\
-	AGE(birthdate) as age, tags, gender, orientation, fame FROM users\
+	let query = 'SELECT username, user_id, AGE(birthdate) as age, tags,\
+	gender, orientation, fame, longitude, latitude,\
+	earth_distance(ll_to_earth($1, $2),\
+	ll_to_earth(longitude, latitude)) as distance FROM users\
 	WHERE NOT EXISTS (SELECT 1 FROM blocked\
-	WHERE (from_user_id = $1 AND to_user_id = users.user_id) OR\
-	(from_user_id = users.user_id AND to_user_id = $1))\
-	AND user_id != $1'
+	WHERE (from_user_id = $3 AND to_user_id = users.user_id) OR\
+	(from_user_id = users.user_id AND to_user_id = $3))\
+	AND user_id != $3'
 
-	const parameters = [user.user_id]
+	const parameters = [user.longitude, user.latitude, user.user_id]
 
 	if (req.query.orientation) {
-		query = query.concat(' AND CAST(orientation AS text) LIKE $2')
 		parameters.push(`%${req.query.orientation}%`)
+		query = query.concat(` AND CAST(orientation AS text) LIKE $${parameters.length}`)
 	}
 
 	if (req.query.gender) {
@@ -44,12 +46,13 @@ usersRouter.get('/', (req, resp) => {
 					: ' OR'} gender=$${parameters.length}`)
 
 			})
-		query = query.concat(')')
+		query = query.concat(') ORDER BY distance ASC')
 	}
 
 	db.query(query, parameters, (err, res) => {
 		if (err)
 			resp.status(500).send(err)
+
 		else
 			resp.status(200).send(res.rows)
 	})
@@ -117,22 +120,22 @@ usersRouter.post('/', async (req, resp) => {
 
 	db.query('INSERT INTO users (first_name, last_name, username, email, password, token, birthdate) \
 		VALUES ($1, $2, $3, $4, $5, $6, $7)',
-	[firstName, lastName, username, email, hashedPassword, token, birthdate],
-	(err, res) => {
-		if (res) {
-			sendEmail(email, token)
-			resp.status(201).send(res.rows[0])
-		}
+		[firstName, lastName, username, email, hashedPassword, token, birthdate],
+		(err, res) => {
+			if (res) {
+				sendEmail(email, token)
+				resp.status(201).send(res.rows[0])
+			}
 
-		else if (err.detail && err.detail.startsWith('Key (email)'))
-			resp.status(409).send({ error: 'email already exists' })
+			else if (err.detail && err.detail.startsWith('Key (email)'))
+				resp.status(409).send({ error: 'email already exists' })
 
-		else if (err.detail && err.detail.startsWith('Key (username)'))
-			resp.status(409).send({ error: 'username already exists' })
+			else if (err.detail && err.detail.startsWith('Key (username)'))
+				resp.status(409).send({ error: 'username already exists' })
 
-		else
-			resp.status(500).send(err)
-	})
+			else
+				resp.status(500).send(err)
+		})
 
 })
 
