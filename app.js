@@ -13,9 +13,13 @@ app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 app.enable('trust proxy')
 
-app.use(express.static(path.resolve(__dirname, '../client/build')))
+app.use(express.static(path.resolve(__dirname, './client/build')))
 Object.keys(routes).forEach(k => {
 	app.use(`/api/${k}`, routes[k])
+})
+
+app.get('*', function (request, response) {
+	response.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
 })
 
 app.use(middleware.unknownEndpoint)
