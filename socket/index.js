@@ -33,13 +33,6 @@ module.exports = server => {
 					clients[messageArray.from].close()
 				}
 
-				if (messageArray.type === 'closed') {
-					db.query('UPDATE users SET online = 0, last_online = CURRENT_TIMESTAMP WHERE user_id = $1',
-						[messageArray.from], () => {
-							console.log('database user last_online should be updated')
-						})
-				}
-
 				if (messageArray.type === 'message') {
 
 					db.query('SELECT from_user_id, to_user_id FROM blocked\
