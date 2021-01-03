@@ -53,7 +53,7 @@ const DeletePhotoButton = ({ photo, user, setUser }) => {
 			})
 	}
 
-	return <Button size="sm" variant="danger" onClick={handleDelete}>
+	return <Button size='sm' variant='light' onClick={handleDelete}>
 		<FontAwesomeIcon icon={faTrash} />
 	</Button>
 }
