@@ -12,20 +12,21 @@ usersRouter.get('/', (req, resp) => {
 	if (!user)
 		return resp.status(401).json({ error: 'token missing or invalid' })
 
-	let query = 'SELECT username, user_id, AGE(birthdate) as age, tags,\
-	gender, orientation, fame, longitude, latitude,\
-	earth_distance(ll_to_earth($1, $2),\
-	ll_to_earth(longitude, latitude)) / 1000 as distance FROM users\
+	let query = 'SELECT u.username, u.user_id, AGE(u.birthdate) as age, u.tags,\
+	u.gender, u.orientation, u.fame, u.longitude, u.latitude,\
+	earth_distance(ll_to_earth(u.longitude, u.latitude),\
+	ll_to_earth(u1.longitude, u1.latitude)) / 1000 as distance FROM users u\
+	INNER JOIN users u1 ON u1.user_id=$1\
 	WHERE NOT EXISTS (SELECT 1 FROM blocked\
-	WHERE (from_user_id = $3 AND to_user_id = users.user_id) OR\
-	(from_user_id = users.user_id AND to_user_id = $3))\
-	AND user_id != $3'
+	WHERE (from_user_id = $1 AND to_user_id = u.user_id) OR\
+	(from_user_id = u.user_id AND to_user_id = $1))\
+	AND u.user_id != $1'
 
-	const parameters = [user.longitude, user.latitude, user.user_id]
+	const parameters = [user.user_id]
 
 	if (req.query.orientation) {
 		parameters.push(`%${req.query.orientation}%`)
-		query = query.concat(` AND CAST(orientation AS text) LIKE $${parameters.length}`)
+		query = query.concat(` AND CAST(u.orientation AS text) LIKE $${parameters.length}`)
 	}
 
 	if (req.query.gender) {
@@ -43,11 +44,13 @@ usersRouter.get('/', (req, resp) => {
 
 				query = query.concat(` ${i === 0
 					? ''
-					: ' OR'} gender=$${parameters.length}`)
+					: ' OR'} u.gender=$${parameters.length}`)
 
 			})
 		query = query.concat(') ORDER BY distance ASC')
 	}
+
+	console.log('query', query, 'parameters', parameters)
 
 	db.query(query, parameters, (err, res) => {
 		if (err)
