@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {} from 'dotenv/config'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 import userService from '../../../services/userService'
 
@@ -35,7 +36,7 @@ const Map = ({ user, setUser }) => {
 	}
 
 	return (
-		<LoadScript googleMapsApiKey={process.env.MAPS_API_KEY} >
+		<LoadScript googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY} >
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={mapCentre}
