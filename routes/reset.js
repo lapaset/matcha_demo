@@ -15,15 +15,13 @@ resetRouter.post('/', (req, resp) => {
 				db.query('UPDATE users SET token = $1 WHERE email = $2', [token, req.body.email], (err, res) => {
 					if (res) {
 						email.sendEmail(req.body.email, 'Reset matcha password',
-							`Please click the following link to reset your password
-https://matchademo.herokuapp.com/reset-password/${token}`)
+							`Please click the following link to reset your password https://matchademo.herokuapp.com/reset-password/${token}`)
 						resp.status(200).send({ message: 'Check your email' })
 					}
 					else
 						resp.status(500).send(err)
 				})
 			})
-			//resp.status(200).send(res.rows[0])
 		}
 		else if (res)
 			resp.status(401).send({ error: 'No user found with that email' })
