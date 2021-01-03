@@ -6,3 +6,9 @@ React/Nodejs/Express/PostgreSQL
 
 [Original project depository](https://github.com/lapaset/matcha)
 
+
+![browsing the users and notifications](/imgs/responsive.png)
+
+![user profile](/imgs/usercard.png)
+
+![chat](/imgs/chat_and_profile.png)
