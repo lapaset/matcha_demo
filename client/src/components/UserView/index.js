@@ -135,7 +135,7 @@ const UserView = ({ user, setUser, matches, setMatches, notifications, setNotifi
 		</Container>
 		<footer>
 			<Container fluid="lg">
-				lapaset & mhjony 2020
+				<a href="https://github.com/lapaset/matcha_demo" title="project git repo">lapaset & mhjony 2020</a>
 			</Container>
 		</footer>
 
