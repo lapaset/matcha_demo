@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Alert } from 'react-bootstrap'
 import loginService from '../../services/loginService'
 import { userGeoLocation } from '../../modules/geolocate'
 import auth from '../../utils/auth'
@@ -50,6 +51,12 @@ const Login = ({ setUser, wsClient }) => {
 		<>
 			<h1 className="text-center mt-3">Login</h1>
 
+			<Alert variant='info' className="mt-3">
+				<p style={{ fontWeight: 'bold' }}>You can also log in as demo user</p>
+				username: demoUser<br/>
+				password: Secret89
+			</Alert>
+			
 			<form onSubmit={handleLogin}>
 				{errorMessage && <div className="text-danger" >{errorMessage}</div>}
 				<div className="form-group mt-3">
