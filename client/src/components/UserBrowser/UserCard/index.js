@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import Photos from './Photos'
 import ActionButtons from './ActionButtons'
 import UserInformation from './UserInformation'
@@ -133,7 +134,7 @@ const UserCard = ({ user_id, loggedUser, wsClient, hideUser, matches, setMatches
 
 		blockService.block(user_id)
 			.then(() => {
-				window.location.href = 'http://localhost:3000'
+				hideUser()
 			})
 			.catch(e => {
 				console.log('Database error', e)
