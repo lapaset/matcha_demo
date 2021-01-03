@@ -81,7 +81,7 @@ const UpdateUserForm = ({ user, setUser }) => {
 
 		<BioTextArea bio={user.bio} register={register} errors={errors.bio} />
 
-		<PasswordFields watch={watch} register={register} errors={errors} />
+		{ user.username !== 'demoUser' && <PasswordFields watch={watch} register={register} errors={errors} /> }
 
 		{errorMessage && <div className="text-danger" >{errorMessage}</div>}
 		{notification && <div className="text-success" >{notification}</div>}
