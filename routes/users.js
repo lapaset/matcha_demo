@@ -101,7 +101,7 @@ usersRouter.post('/', async (req, resp) => {
 		(err, res) => {
 			if (res) {
 				mail.sendEmail(email, 'Verify your matcha account', `Please click the following link to verify your email
-				/verify?token=${token}`)
+https://matchademo.herokuapp.com/api/verify?token=${token}`)
 				resp.status(201).send(res.rows[0])
 			}
 

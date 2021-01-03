@@ -16,7 +16,7 @@ resetRouter.post('/', (req, resp) => {
 					if (res) {
 						email.sendEmail(req.body.email, 'Reset matcha password',
 							`Please click the following link to reset your password
-/reset-password/${token}`)
+https://matchademo.herokuapp.com/reset-password/${token}`)
 						resp.status(200).send({ message: 'Check your email' })
 					}
 					else
