@@ -9,10 +9,10 @@ const UserSearch = ({ user, showUser, users }) => {
 	const [resultsToShow, setResultsToShow] = useState([])
 	const [requiredTags, setRequiredTags] = useState(localStorage.getItem('matchaRequiredTags') || [])
 
-	const maxDistance = useFilter('matchaMaxDistance', 100, 'number')
-	const minAge = useFilter('matchaMinAge', 20, 'number')
-	const maxAge = useFilter('matchaMaxAge', 120, 'number')
-	const minFame = useFilter('matchaMinFame', 50, 'number')
+	const maxDistance = useFilter('matchaMaxDistance', 200, 'number')
+	const minAge = useFilter('matchaMinAge', user.age - 10, 'number')
+	const maxAge = useFilter('matchaMaxAge', user.age + 10, 'number')
+	const minFame = useFilter('matchaMinFame', 70, 'number')
 
 	useEffect(() => {
 		setResultsToShow(users)
