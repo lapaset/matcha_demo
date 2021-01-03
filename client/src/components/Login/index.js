@@ -52,7 +52,7 @@ const Login = ({ setUser, wsClient }) => {
 			<h1 className="text-center mt-3">Login</h1>
 
 			<Alert variant='info' className="mt-3">
-				<p style={{ fontWeight: 'bold' }}>You can also log in as demo user</p>
+				<p style={{ fontWeight: 'bold' }}>Signup or login as demo user</p>
 				username: demoUser<br/>
 				password: Secret89
 			</Alert>
