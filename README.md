@@ -6,9 +6,11 @@ React/Nodejs/Express/PostgreSQL
 
 [Original project depository](https://github.com/lapaset/matcha)
 
+## Responsive
+![app is responsive](/imgs/responsive.png)
 
-![browsing the users and notifications](/imgs/responsive.png)
+## Browse users, get real time notifications
+![user cards](/imgs/usercard.png)
 
-![user profile](/imgs/usercard.png)
-
-![chat](/imgs/chat_and_profile.png)
+## Chat with matches, edit your profile
+![chat and profile](/imgs/chat_and_profile.png)
