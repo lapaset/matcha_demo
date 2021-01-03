@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
-//import { api } from '../../../secret.json'
 import userService from '../../../services/userService'
 
 const containerStyle = {
@@ -35,8 +34,8 @@ const Map = ({ user, setUser }) => {
 			})
 	}
 
-	return <p>map</p>/*(
-		<LoadScript googleMapsApiKey={api} >
+	return (
+		<LoadScript googleMapsApiKey={process.env.MAPS_API_KEY} >
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={mapCentre}
@@ -49,7 +48,7 @@ const Map = ({ user, setUser }) => {
 				/>
 			</GoogleMap>
 		</LoadScript>
-	)*/
+	)
 }
 
 export default Map
