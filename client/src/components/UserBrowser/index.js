@@ -49,7 +49,7 @@ const UserBrowser = ({ user, wsClient, showUserAtLoad, matches, setMatches }) =>
 		setUserToShow(null)
 	}
 
-	const showUser = user => setUserToShow(user.user_id)
+	const showUser = user => history.push(`/browse?user_id=${user.user_id}`)
 
 	const userCardProps = {
 		user_id: userToShow, loggedUser: user, wsClient, hideUser,
