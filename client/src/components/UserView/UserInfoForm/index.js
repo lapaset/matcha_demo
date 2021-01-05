@@ -39,7 +39,7 @@ const UserInfoForm = ({ user, setUser }) => {
 			.updateUser(updatedUser, user.user_id)
 			.then(data => {
 
-				if (photo && !photo.profilePic) {
+				if (photo && !photo.profilePic && photo.photoStr) {
 
 					const photoToAdd = {
 						user_id: user.user_id,
