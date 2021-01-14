@@ -1,16 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 import { Card, Modal } from 'react-bootstrap'
 
 const Chat = ({ user, match, handleClose, wsClient }) => {
 
 	const [input, setInput] = useState('')
-	const messagesEndRef = useRef(null)
+	const messagesEndRef = useRef()
 	const inputField = useRef()
 
 	const sendMessage = (from, fromUn, to, msg) => {
 
-		//show some kind of error if connection is not working
 		if (wsClient.current.readyState > 1) {
 			console.log('Could not send message, websocket state', wsClient.current.readyState)
 			return
@@ -25,6 +24,11 @@ const Chat = ({ user, match, handleClose, wsClient }) => {
 		}))
 	}
 
+	const scrollToEnd = () => {
+		if (messagesEndRef.current)
+			messagesEndRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' })
+	}
+
 	const handleSubmit = e => {
 		e.preventDefault()
 
@@ -32,16 +36,17 @@ const Chat = ({ user, match, handleClose, wsClient }) => {
 			return
 		sendMessage(user.user_id, user.username, match.user_id, input)
 		setInput('')
+		scrollToEnd()
 	}
 
-	useEffect(() => {
-		if (messagesEndRef.current)
-			messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
-	}, [match])
+	const handleEnterModal = () => {
+		inputField.current.focus()
+		scrollToEnd()
+	}
 
 	return match
 		? <>
-			<Modal show={true} onHide={handleClose} onEntered={() => inputField.current.focus()}>
+			<Modal show={true} onHide={handleClose} onEntered={handleEnterModal}>
 				<Modal.Header closeButton>
 					<Modal.Title>{match.username}</Modal.Title>
 				</Modal.Header>
